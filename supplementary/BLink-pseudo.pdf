@@ -1,0 +1,52 @@
+<HTML>
+<head>
+<title DB3 step2 PseudoCode </title>
+</head>
+<body>
+
+<h1> Algorithm DB3. Step 3</h1>
+
+<h2>Input: Physical position of a pair of markers, {\bf s1}, {\bf s2}, the prior precision {\bf alpha}, biloci haplotype counters {\bf nAB}, {\bf nAb}, {\bf naB}, {\bf nab} and the number of individuals with unphased haplotypes {\bf nHH} for this pair of markers.</h2>
+
+<h2>Output: Estimation of the allele population frequencies {\bf fA}, {\bf fB} and the haplotype population frequencies {\bf fAB}, {\bf fAb}, {\bf faB} and {\bf fab} for the pair of markers.</h2>
+
+<h2>Procedure:</h2>
+<h3>distance=abs(s2-s1)</h3>
+<h3>nKnownHaplotypes=nAB+nAb+naB+nab</h3>
+<h3>alphaHap=alpha*(1-exp(-distance/100000))</h3>
+<h3> fAB=(nAB+alphaHap)/(nHaplotypes+alpha)</h3>
+<h3> nA=nAB+nAb+nHH</h3>
+<h3> nB=nAB+naB+nHH</h3>
+<h3> fA=(nA+2*alphaHap)/(nHaplotypes+nHH+alpha)</h3>
+<h3> fB=(nB+2*alphaHap)/(nHaplotypes+nHH+alpha)</h3>
+<h3> fAB=EM(fAB, nHH, nAB, nKnownHaplotypes, fA, fB)</h3>
+<h3> fAb=fA-fAB</h3>
+<h3> faB=fB-fAB</h3>
+<h3> fab=1-fAB-fAb-faB</h3>
+
+
+where EM(fAB, nHH, nAB, nKnownHaplotypes, fA, fB) uses the EM algorithm to take into account unknown haplotypes. 
+A pseudocode for a recursive EM algorithm for biloci and biallelic haplotypes is shown in the following page.
+
+<h1>Algorithm Recursive EM for biallelic and biloci haplotypes.</h1>
+
+<h2>Input: Current frequency estimation of haplotype {\bf AB}, {\bf fAB}, the total number of individual with unknown phase {\bf nHH}, the total number of haplotypes {\bf AB} in the sample, {\bf nAB},  the total number of known haplotypes in the sample, {\bf nKnownHaplotypes} and allele frequencies {\bf fA}, {\bf fB}.</h2>
+
+<h2> Output: Estimation of the haplotype population frequency {\bf fAB}. </h2>
+
+<h2>Note: In our implementation, variable {\bf threshold} is 5E-5.</h2>
+
+<h2>Procedure:</h2>
+
+<h3>fAb=fA-fAB</h3>
+<h3> faB=fB-fAB</h3>
+<h3> fab=1-fAB-fAb-faB</h3>
+<h3> Expected=(fAB*fab)/(fAB*fab+fAb*faB)</h3>
+<h3> Maximum=(nAB+nHH*Expected)/(nKnownHaplotypes+2*nHH)</h3>
+<h3> IF abs(fAB-Maximum) $>$ threshold THEN</h3>
+<h4> EM(Maximum, nHH, nAB, nKnownHaplotypes, fA, fB)</h4>
+<h3> END IF
+<h3> RETURN Maximum
+
+
+</body><html>

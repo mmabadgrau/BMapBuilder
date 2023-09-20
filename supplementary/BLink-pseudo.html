@@ -1,0 +1,52 @@
+<HTML>
+<head>
+ <link href="/css/normal.css" rel="stylesheet" type="text/css">
+
+<title> BLink step 2 PseudoCode </title>
+</head>
+<body>
+
+<h1> Algorithm BLink. Step 2</h1>
+<h3>Input:</h3> <p>Physical position of a pair of markers, <b> s1</B>, <b>s2</B>, the prior precision <b> alpha</B>, bilocus haplotype counters <b>nAB</B>, <b>nAb</B>, <b>naB</B>, <b>nab</B> and the number of individuals with unphased haplotypes <b>nHH</b> for this pair of markers.</p>
+
+<h3>Output:</h3> <p>Estimation of the allele population frequencies <b>fA</B>, <b>fB</B> and the haplotype population frequencies <b>fAB</b>, <b>fAb</B>, <b>faB</b> and <b>fab</B> for the pair of markers.</p>
+
+<h3>Procedure:</h3>
+<nl>
+<li>distance=abs(s2-s1)</li>
+<li>nKnownHaplotypes=nAB+nAb+naB+nab</li>
+<li>alphaHap=alphax(1-exp(-distance/100000))</li>
+<li> fAB=(nAB+alphaHap)/(nHaplotypes+alpha)</li>
+<li> nA=nAB+nAb+nHH</li>
+<li> nB=nAB+naB+nHH</li>
+<li> fA=(nA+2xalphaHap)/(nHaplotypes+nHH+alpha)</li>
+<li> fB=(nB+2xalphaHap)/(nHaplotypes+nHH+alpha)</li>
+<li> fAB=IP(fAB, nHH, nAB, nKnownHaplotypes, fA, fB)</li>
+<li> fAb=fA-fAB</li>
+<li> faB=fB-fAB</li>
+<li> fab=1-fAB-fAb-faB</li>
+</nl>
+
+<p>where IP(fAB, nHH, nAB, nKnownHaplotypes, fA, fB, MaxIteration=default) uses an Iterative Proportional (IP) algorithm to take into account unknown haplotypes. </p>
+<h1>Algorithm Recursive IP for biallelic and bilocus haplotypes.</h1>
+
+<h3>Input:</h3> Current frequency estimation of haplotype <b>AB</b>, <b>fAB</b>, the total number of individual with unknown phase <b>nHH</b>, the total number of haplotypes <b>AB</b> in the sample, <b>nAB</b>,  the total number of known haplotypes in the sample, <b>nKnownHaplotypes</b> and allele frequencies <b>fA</b>, <b>fB</B>.
+
+<h3> Output:</h3> Estimation of the haplotype population frequency <b>fAB</b>.
+
+<h3>Note:</h3> In our implementation, variable <b>threshold</b> is 5E-5 and  default value for <b>MaxIterations</b> is 1000.
+
+<h3>Procedure:</h3>
+<nl>
+<li>fAb=fA-fAB</li>
+<li> faB=fB-fAB</li>
+<li> fab=1-fAB-fAb-faB</li>
+<li> Expected=(fABxfab)/(fABxfab+fAbxfaB)</li>
+<li> Maximum=(nAB+nHHxExpected)/(nKnownHaplotypes+2xnHH)</li>
+<li> IF abs(fAB-Maximum) > threshold AND MaxIterations>0 THEN
+IP(Maximum, nHH, nAB, nKnownHaplotypes, fA, fB, MaxIterations-1)
+END IF</li>
+<li> RETURN Maximum</li>
+
+</nl>
+</body><html>

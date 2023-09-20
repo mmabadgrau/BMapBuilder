@@ -1,0 +1,2 @@
+si falta alguna columna, como rsnumber, y aparecen dos comas segidas (,,), el programa descarta esa columna y entonces cambia la numeracion y se usan columnas erroneas
+

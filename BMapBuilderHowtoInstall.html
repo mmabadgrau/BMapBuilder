@@ -1,0 +1,74 @@
+<html>
+<head>
+<title>BMapBuilder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <link href="/css/normal.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Users' documentation for BMapBuilder 1.0</h1>
+<h2>Installation</h2>
+<h3>Java Runtime Environment</h3>
+BMapBuilder is a Java program. In order to use it, you need a Java Runtime Environment (JRE) version 1.4 or later. If you do not have it, get and install the newest version of the JRE at:
+
+<a href="http://www.java.com/">Sun JRE</a>
+
+<h3>Download BMapBuilder</h3>
+
+Download <a href="/BMapBuilder/BMapBuilder.jar">BMapBuilder.jar</a>
+
+
+<h3>Install BMapBuilder</h3>
+
+<h4>Windows, Mac OSX</h4>
+You should be able to start the program by double-clicking on the jar file.
+The program can also be run by typing java -jar BMapBuilder.jar  on the command line. 
+<!--For large datasets the use of this second option is mandatory for the program to work. Moreover, the argument -Xmx<b>M</b>m, with <b>M</b> being the maximum internal memory your computer can use in Megabytes, must be added. As an example, 
+<br>java -jar -Xmx1000m BMapBuilder.jar will allow the program to use a maximum of 1000 MB memory.
+<br><b>Note:</b>The program will not work when launched by double-click on the jar file if the input file is too large.-->
+
+<h4>Unix, Linux</h4>
+The program can be run by typing java -jar BMapBuilder.jar  on the command line.
+<!-- We recommend to use the argument -Xmx if the program return an "out of memory" error.-->
+
+<h3>Input file format</h3>
+<p>Text files with at least three columns, no matters the order, are required. 
+Each row contains information for a pair of SNPs.
+
+<br>
+The three columns correspond to the SNP positions of each SNP in the pair and the estimation value (which must be a value in the interval [0,1]).
+<br>
+Besides these three columns, the program can also uses the major allele relative frequency for each SNP in the pair, i.e., two more columns.
+Once again, the order is not important as the program allows the user to choose the colums.
+<br>
+Other columns in the file will not be taken into account.
+<br><a href="test.pm">Here</a> there is a very small file than can be used as an example of input file.</br>
+</p>
+
+<h3>Output file format</h3>
+<p>The bitmap will be written in a png graphic file. 
+<br>For each snp pair, a square with <b>res</b> bits side will be used to represent the value of the estimation, following this scale:
+
+<br><img align="center" src="/BMap/scale.png">
+<br>The value of <b>res</b> can be chosen in the program as well as the color tones (green, red or blue). 
+<br>We do not recommend resolutions greater than 5 for large files, as those at the <a href"http://www.hapmap.org">International Hapmap Project website</a>. 
+
+<h3>How to use BMapBuilder</h3>
+In order to build a new bitmap you have to use option "Build" in the "File" menu.
+<br>The following parameters will be required to the user:
+<ul>
+<li>Column where position for the first SNP is</li>
+<li>Column where position for the second SNP is </li>
+<li>Column where the estimator (D', r, LOD or whatever) is</li>
+<li>Color to be used (red, green or blue)</li>
+<li>Resolution to be used (for larga data sets, high resolutions should only be used if the computer has enough RAM memory)</li>
+</ul> 
+
+<h3>Additional information</h3>
+
+<a href="supplementary/data.html">Some datasets</a> 
+<br> <a href="supplementary">Other supplementary information</a> 
+
+<p>
+</body>
+</html>
