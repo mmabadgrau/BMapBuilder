@@ -1,0 +1,128 @@
+<html>
+<head>
+<title>BMapBuilder</title>
+<meta http-equiv="Content-Type" content="text/html; charset=iso-8859-1">
+ <link href="/css/normal.css" rel="stylesheet" type="text/css">
+</head>
+
+<body>
+<h1>Users' documentation for BMapBuilder</h1>
+<h2>Installation</h2>
+<h3>Java Runtime Environment</h3>
+BMapBuilder is a Java 2 program. In order to use it, you need a Java Runtime Environment (JRE) version 1.4 or later. If you do not have it, get and install the newest version of the JRE at:
+
+<a href="http://www.java.com/">Sun JRE</a>
+<h3>Java 3D</h3>
+Since version 2 of BMapBuilder, 3D functionality was added. For 3D functions to be run in your computer you will need to have installed Java 3D, at least version 1.3.1:
+
+<a href="https://java3d.dev.java.net/binary-builds.html">Download Java3D</a>.
+<br>
+If you perform a manual installation, please make sure files are installed in the correct folder or the program will not start.
+
+<h3>Incompatibility notes</h3>
+It has to be noted that recent versions of Java3D may not be supported by some   graphic drivers. If 3D functionality of BMapBuilder 2.0 does not work, you may need either to uninstall Java3D and install and older version (we recommend version 1.3.1 or 1.3.2) or to update your graphic driver. 
+<br>
+
+<h3>Download BMapBuilder</h3>
+
+Download <a href="/BMapBuilder/BMapBuilder3.2.jar">BMapBuilder 3.2</a> with 3D functionality (recommended)
+<br>
+Download <a href="/BMapBuilder/BMapBuilder3.1.jar">BMapBuilder 3.1</a> with 3D functionality
+<br>
+Download <a href="/BMapBuilder/BMapBuilder23.jar">BMapBuilder 2.3</a> with 3D functionality 
+<br>
+Download <a href="/BMapBuilder/BMapBuilder22.jar">BMapBuilder 2.2</a> with 3D functionality
+<br>
+Download <a href="/BMapBuilder/BMapBuilder2.1.jar">BMapBuilder 2.1</a> with 3D functionality 
+<br><a href="/BMapBuilder/supplementary/versionControl.php">Follow version control</a>
+
+<h3>Install BMapBuilder</h3>
+
+<h4>Windows, Mac OSX</h4>
+Make sure that the file you have downloaded has extension ".jar", as some Internet browser may change it by ".zip" when downloading. You should be able to start the program by double-clicking on the jar file.
+The program can also be run by typing java -jar [<it>BMapBuilder jar file</it>]  on the command line. 
+<!--<br><b>Note:</b>The program will not work when launched by double-click on the jar file if the input file is too large.-->
+
+<h4>Unix, Linux</h4>
+The program can be run by typing java -jar BMapBuilder2.jar  on the command line or by double-clicking on it.
+
+<h3>Large datasets</h3>
+We recommend to use the argument -Xmx for large datasets. Otherwise the program may return an "out of memory" error.
+Thus, for large datasets, as chromosome-wide datasets, the program must be run by typing java -jar -Xmx<b>M</b>m BMapBuilder2.jar, with <b>M</b> being the maximum internal memory your computer can use in Megabytes. As an example,
+<br><br>java -jar -Xmx2000m BMapBuilder3.1.jar <br><br>will allow the program to use a maximum of 2000 MB memory.
+
+<h3>Textual user interface</h3>
+For large data files we strongly recommend to use a textual user interface, as the following example:
+<br><br>java -jar -Xmx2000m BMapBuilder3.1.jar -ng -f=<it>i.pm</it> -o=<it>o.png</it> -est=8 -snp1=1 -snp2=4 <br><br>.
+<br> -Xmx2000m will allow the program to use a maximum of 2000 MB memory
+<br> -ng will run the program in textual mode
+<br> -f=<it>i.pm</it> will use file i.pm as the input file
+<br> -f=<it>o.png</it> will use file o.png as the output file
+<br> -est=8 will use information at column 8 as LD measure
+<br> -snp1=1 will use column 1 to find the position of SNP 1
+<br> -snp2=4 will use column 4 to find the position of SNP 2
+
+<br>Run java -jar BMapBuilder -ng for more information about program arguments.
+
+<h3>Input file format</h3>
+<p>Text files with at least three columns, no matters the order, are required. 
+Each row contains information for a pair of SNPs.
+
+<br>
+The three columns correspond to the physical position of each SNP in the pair and the estimation value (which must be a value in the interval [0,1]).
+<br>
+Besides these three columns, the program can also uses the major allele relative frequency for each SNP in the pair, i.e., two more columns.
+The order is not important as the program allows the user to choose the colums.
+<br>
+Other columns in the file will not be taken into account.
+<br><a href="test.pm">Here</a> there is a very small file than can be used as an example of an input file.</br>
+There can be a first line in the row with the heading. The number of words in the heading must be the same as columns in the file. Words must be separated by tab, blank space or comma.
+</p>
+
+<h3>Output file format</h3>
+<p>The bitmap will be written in a png graphic file. 
+<br>For each snp pair, a square with <b>res</b> bits side will be used to represent the value of the estimation, following this scale:
+
+<br><img align="center" src="/BMap/scale.png">
+<br>The value of <b>res</b> can be chosen in the program as well as the color tones (green, red or blue). 
+<br>We do not recommend resolutions greater than 5 for large files, as those at the <a href"http://www.hapmap.org">International HapMap Project website</a>. 
+
+<h3>How to use BMapBuilder</h3>
+In order to build a new 2D/3D bitmap using the Graphical User Inteface (GUI), you have to use the option "Build" in the "2D/3D" menu.
+<br>Besides providing a source file, the following mandatory parameters will be required to the user when a 2D bitmap is going to be built, either from the GUI or from the command line:
+<ul>
+<li>Column where position for the first SNP is</li>
+<li>Column where position for the second SNP is </li>
+<li>Column where the estimator (D', r, LOD or whatever) is</li>
+</ul>
+
+The following parameters are optional:
+<ul>
+<li>Whether the source file contains a heading line (no by default)</li>
+<li>Column with a confidence level if the map is to be coloured using also the confidence level of the LD measure estimation</li>
+<li>Binary signal column.- It is used to represent a single individual versus sample recombination LD maps. 0 means 2-snp haplotype is unobserved, 1 means it is observed and consistent with the non recombinant haplotypes (it will be represented in green color for maps in red or blue, blue for maps in green) and -1 means it is observed and it is consistent with recombination haplotypes (blue color for maps in red, red color for maps in green or blue).</li>
+<li>SNP1 column for annotation.- Column number with annotations used for SNP1 instead of that at the SNP1 column</li>
+<li>SNP2 column annotation.- Column number with annotations used for SNP2 instead of that at the SNP2 colums.</li>
+<li>Annotation.- A file with the SNP positions to be shown in the LD map. If not used, SNP positions will be shown in the LD map at a constant distance.</li>
+<li>Annnotation 2.- A second file with SNP positions to be shown in green color (instead of black). If a position is also included in the "Annotation" file, it eill be shown in red color.</li>
+<li>Individual pos.- Optional field for individual versus sample recombination LD map (minimum size for each LD pair (in the following menu if using the GUI) must be set to 3): choose a file with individual positions to be shown in the LD map. color black is used whether individual sets are inconsistent between a pair of adjacent squares, white if they are consistent.</li>
+<li>MAF1.- MAF for the first SNP in the case a threshold is to be imposed to display the first SNP.</li>
+<li>MAF2.- MAF for the second SNP in the case a threshold is to be imposed to display the second SNP.</li>
+<li>Color to be used (red, green or blue).- If using the GUI, this parameter will be entered in a second window. </li>
+<li>Resolution to be used (for larga data sets, high resolutions should only be used if the computer has enough RAM memory).- If using the GUI, this paramenter will be entered in a second window.</li>
+</ul> 
+
+<h3>Citation</h3>
+<p>Please, cite BMapBuilder with the following paper:
+</p><p>
+Abad-Grau, M.M.; Montes, R.; Sebastiani, P. <br>&quot;Building chromosome-wide LD maps&quot;, <br>Bioinformatics 22(16): 1933-1934 (2006)</p>
+
+
+<h3>Additional information</h3>
+
+<a href="supplementary/data.html">Some datasets</a> 
+<br> <a href="supplementary">Other supplementary information</a> 
+
+<p>
+</body>
+</html>
